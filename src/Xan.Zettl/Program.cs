@@ -1,9 +1,9 @@
 using Avalonia;
 using System;
 using System.Diagnostics;
-using Xan.TextBoard.Models;
+using Xan.Zettl.Models;
 
-namespace Xan.TextBoard;
+namespace Xan.Zettl;
 
 sealed class Program
 {
@@ -24,15 +24,15 @@ sealed class Program
         }
 
         Console.WriteLine("Usage:");
-        Console.WriteLine("  TextBoard --edit           Open the fragment editor");
-        Console.WriteLine("  TextBoard --paste <name>   Copy a fragment to the clipboard");
+        Console.WriteLine("  zettl --edit           Open the fragment editor");
+        Console.WriteLine("  zettl --paste <name>   Copy a fragment to the clipboard");
     }
 
     private static void Paste(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
-            Console.Error.WriteLine("Usage: TextBoard --paste <name>");
+            Console.Error.WriteLine("Usage: zettl --paste <name>");
             Environment.Exit(1);
             return;
         }

@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Xan.TextBoard.ViewModels;
+namespace Xan.Zettl.ViewModels;
 
 public partial class FragmentEditViewModel : ViewModelBase
 {

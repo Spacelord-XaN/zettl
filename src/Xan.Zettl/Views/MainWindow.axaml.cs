@@ -1,8 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Xan.TextBoard.ViewModels;
+using Xan.Zettl.ViewModels;
 
-namespace Xan.TextBoard.Views;
+namespace Xan.Zettl.Views;
 
 public partial class MainWindow : Window
 {

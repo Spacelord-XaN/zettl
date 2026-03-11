@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
 
-namespace Xan.TextBoard.Models;
+namespace Xan.Zettl.Models;
 
 public static class TextFragmentStore
 {
     private static readonly string FilePath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "TextBoard",
+        "zettl",
         "fragments.xml");
 
     public static List<TextFragment> Load()
@@ -42,7 +42,7 @@ public static class TextFragmentStore
         try
         {
             Directory.CreateDirectory(Path.GetDirectoryName(FilePath)!);
-            var root = new XElement("TextBoard");
+            var root = new XElement("Zettl");
             foreach (var fragment in fragments)
                 root.Add(new XElement("Fragment", new XAttribute("name", fragment.Name), fragment.Text));
 

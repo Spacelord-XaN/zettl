@@ -1,14 +1,14 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Xan.TextBoard.ViewModels"
-        xmlns:models="using:Xan.TextBoard.Models"
+        xmlns:vm="using:Xan.Zettl.ViewModels"
+        xmlns:models="using:Xan.Zettl.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="480"
-        x:Class="Xan.TextBoard.Views.MainWindow"
+        x:Class="Xan.Zettl.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="TextBoard"
+        Title="zettl"
         Width="720" Height="480"
         MinWidth="480" MinHeight="300">
 

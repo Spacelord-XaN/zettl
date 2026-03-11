@@ -4,10 +4,10 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
-using Xan.TextBoard.ViewModels;
-using Xan.TextBoard.Views;
+using Xan.Zettl.ViewModels;
+using Xan.Zettl.Views;
 
-namespace Xan.TextBoard;
+namespace Xan.Zettl;
 
 public partial class App : Application
 {

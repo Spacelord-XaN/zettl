@@ -1,4 +1,4 @@
-namespace Xan.TextBoard.Models;
+namespace Xan.Zettl.Models;
 
 public sealed class TextFragment
 {

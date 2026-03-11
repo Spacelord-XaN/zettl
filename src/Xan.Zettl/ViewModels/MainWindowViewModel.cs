@@ -2,9 +2,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Xan.TextBoard.Models;
+using Xan.Zettl.Models;
 
-namespace Xan.TextBoard.ViewModels;
+namespace Xan.Zettl.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
