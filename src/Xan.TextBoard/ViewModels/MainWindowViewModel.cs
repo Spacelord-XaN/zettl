@@ -15,22 +15,19 @@ public partial class MainWindowViewModel : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
     private TextFragment? _selectedFragment;
 
-    [ObservableProperty]
-    private bool _isDirty;
-
     public MainWindowViewModel()
     {
         foreach (var f in TextFragmentStore.Load())
             Fragments.Add(f);
     }
 
-    [RelayCommand]
-    private void Add()
+    // Called from the view after the add dialog returns OK
+    public void AddFragment(string name, string text)
     {
-        var fragment = new TextFragment { Name = "New Fragment", Text = string.Empty };
+        var fragment = new TextFragment { Name = name, Text = text };
         Fragments.Add(fragment);
         SelectedFragment = fragment;
-        IsDirty = true;
+        AutoSave();
     }
 
     [RelayCommand(CanExecute = nameof(HasSelection))]
@@ -39,7 +36,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedFragment is null) return;
         Fragments.Remove(SelectedFragment);
         SelectedFragment = Fragments.FirstOrDefault();
-        IsDirty = true;
+        AutoSave();
     }
 
     // Called from the view after the edit dialog returns OK
@@ -47,7 +44,6 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         target.Name = newName;
         target.Text = newText;
-        IsDirty = true;
         // Notify the list to refresh the displayed name
         var idx = Fragments.IndexOf(target);
         if (idx >= 0)
@@ -56,14 +52,10 @@ public partial class MainWindowViewModel : ViewModelBase
             Fragments.Insert(idx, target);
             SelectedFragment = target;
         }
+        AutoSave();
     }
 
-    [RelayCommand]
-    private void Save()
-    {
-        TextFragmentStore.Save(Fragments);
-        IsDirty = false;
-    }
+    private void AutoSave() => TextFragmentStore.Save(Fragments);
 
     private bool HasSelection => SelectedFragment is not null;
 

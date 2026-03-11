@@ -24,21 +24,12 @@
                     Spacing="6"
                     Margin="8,8,8,4">
             <Button Content="➕ Add"
-                    Command="{Binding AddCommand}"/>
+                    Name="AddButton"/>
             <Button Content="✏️ Edit"
                     Command="{Binding EditCommand}"
                     Name="EditButton"/>
             <Button Content="🗑 Delete"
                     Command="{Binding DeleteCommand}"/>
-            <Separator Width="1" Background="Gray" Margin="4,0"/>
-            <Button Content="💾 Save"
-                    Command="{Binding SaveCommand}"
-                    Classes.accent="{Binding IsDirty}"/>
-            <TextBlock Text="● Unsaved changes"
-                       IsVisible="{Binding IsDirty}"
-                       VerticalAlignment="Center"
-                       Foreground="OrangeRed"
-                       Margin="6,0,0,0"/>
         </StackPanel>
 
         <!-- Two-panel layout -->
