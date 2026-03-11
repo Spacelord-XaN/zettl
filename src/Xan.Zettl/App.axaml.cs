@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using Xan.Zettl.Models;
 using Xan.Zettl.ViewModels;
 using Xan.Zettl.Views;
 
@@ -11,6 +13,10 @@ namespace Xan.Zettl;
 
 public partial class App : Application
 {
+    internal static bool PastePickerMode { get; set; }
+    internal static IReadOnlyList<TextFragment> PastePickerFragments { get; set; } = [];
+    internal static PastePickerWindow? PastePickerWindowInstance { get; set; }
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -20,13 +26,22 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
-            // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = new MainWindow
+
+            if (PastePickerMode)
             {
-                DataContext = new MainWindowViewModel(),
-            };
+                var vm = new PastePickerViewModel(PastePickerFragments);
+                var window = new PastePickerWindow(vm);
+                PastePickerWindowInstance = window;
+                desktop.MainWindow = window;
+            }
+            else
+            {
+                desktop.MainWindow = new MainWindow
+                {
+                    DataContext = new MainWindowViewModel(),
+                };
+            }
         }
 
         base.OnFrameworkInitializationCompleted();

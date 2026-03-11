@@ -1,5 +1,6 @@
 using Avalonia;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Xan.Zettl.Models;
 
@@ -12,8 +13,10 @@ sealed class Program
     {
         if (args.Length >= 1 && args[0] == "--paste")
         {
-            var name = args.Length >= 2 ? args[1] : string.Empty;
-            Paste(name);
+            if (args.Length >= 2)
+                Paste(args[1]);
+            else
+                RunPicker();
             return;
         }
 
@@ -24,19 +27,12 @@ sealed class Program
         }
 
         Console.WriteLine("Usage:");
-        Console.WriteLine("  zettl --edit           Open the fragment editor");
-        Console.WriteLine("  zettl --paste <name>   Copy a fragment to the clipboard");
+        Console.WriteLine("  zettl --edit             Open the fragment editor");
+        Console.WriteLine("  zettl --paste [name]     Copy a fragment to the clipboard");
     }
 
     private static void Paste(string name)
     {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            Console.Error.WriteLine("Usage: zettl --paste <name>");
-            Environment.Exit(1);
-            return;
-        }
-
         var fragments = TextFragmentStore.Load();
         var fragment = fragments.Find(f =>
             string.Equals(f.Name, name, StringComparison.OrdinalIgnoreCase));
@@ -48,14 +44,33 @@ sealed class Program
             return;
         }
 
-        if (TrySetClipboard(fragment.Text))
+        PasteResult(fragment);
+    }
+
+    private static void RunPicker()
+    {
+        var fragments = TextFragmentStore.Load();
+        if (fragments.Count == 0)
         {
+            Console.Error.WriteLine("No fragments saved yet.");
+            return;
+        }
+
+        App.PastePickerMode = true;
+        App.PastePickerFragments = fragments;
+        BuildAvaloniaApp().StartWithClassicDesktopLifetime(Array.Empty<string>());
+
+        var selected = App.PastePickerWindowInstance?.SelectedFragment;
+        if (selected is not null)
+            PasteResult(selected);
+    }
+
+    private static void PasteResult(TextFragment fragment)
+    {
+        if (!Console.IsOutputRedirected && TrySetClipboard(fragment.Text))
             Console.WriteLine($"Fragment '{fragment.Name}' copied to clipboard.");
-        }
         else
-        {
             Console.Write(fragment.Text);
-        }
     }
 
     private static bool TrySetClipboard(string text)

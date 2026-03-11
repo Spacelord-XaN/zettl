@@ -5,8 +5,8 @@ A small cross-platform tool for managing and pasting named text fragments.
 ## Usage
 
 ```
-zettl --edit           Open the fragment editor
-zettl --paste <name>   Copy a fragment to the clipboard
+zettl --edit             Open the fragment editor
+zettl --paste [name]     Copy a fragment to the clipboard
 ```
 
 ### Editor (`zettl --edit`)
@@ -26,13 +26,15 @@ Toolbar actions:
 
 Changes are saved automatically. Press **Escape** to close the editor or cancel a dialog.
 
-### Paste (`zettl --paste <name>`)
+### Paste (`zettl --paste [name]`)
 
 Copies the text of the named fragment to the system clipboard. Name matching is case-insensitive.
 
 ```sh
 zettl --paste greeting
 ```
+
+If no name is given, a selection window opens with a fuzzy-search box. Type to filter, use **↑ / ↓** to move through results, **Enter** to confirm, **Escape** to cancel.
 
 If no clipboard tool is available the text is written to stdout instead, so piping works too:
 
@@ -56,9 +58,9 @@ The file is created automatically on first save.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<TextBoard>
+<Zettl>
   <Fragment name="greeting">Hello, World!</Fragment>
-</TextBoard>
+</Zettl>
 ```
 
 ## Building

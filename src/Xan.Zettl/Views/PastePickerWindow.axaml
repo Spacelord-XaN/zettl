@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Xan.Zettl.ViewModels"
+        xmlns:models="using:Xan.Zettl.Models"
+        x:Class="Xan.Zettl.Views.PastePickerWindow"
+        x:DataType="vm:PastePickerViewModel"
+        Title="Select Fragment"
+        Width="400" Height="320"
+        MinWidth="280" MinHeight="160"
+        WindowStartupLocation="CenterScreen"
+        CanResize="True"
+        Topmost="True">
+
+    <Grid RowDefinitions="Auto,*" Margin="8">
+
+        <TextBox Grid.Row="0"
+                 Text="{Binding Query}"
+                 Watermark="Search…"
+                 Name="SearchBox"
+                 Margin="0,0,0,6"/>
+
+        <ListBox Grid.Row="1"
+                 ItemsSource="{Binding FilteredFragments}"
+                 SelectedItem="{Binding SelectedFragment}"
+                 Name="ResultList">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="models:TextFragment">
+                    <TextBlock Text="{Binding Name}" Padding="4,2"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </Grid>
+</Window>
