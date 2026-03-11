@@ -8,8 +8,9 @@ namespace Xan.TextBoard.Models;
 public static class TextFragmentStore
 {
     private static readonly string FilePath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-        ".textboard.xml");
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "TextBoard",
+        "fragments.xml");
 
     public static List<TextFragment> Load()
     {
@@ -40,6 +41,7 @@ public static class TextFragmentStore
     {
         try
         {
+            Directory.CreateDirectory(Path.GetDirectoryName(FilePath)!);
             var root = new XElement("TextBoard");
             foreach (var fragment in fragments)
                 root.Add(new XElement("Fragment", new XAttribute("name", fragment.Name), fragment.Text));
