@@ -30,6 +30,12 @@ public partial class MainWindow : Window
 
         EditButton.Click += async (_, _) => await OpenEditDialog();
         FragmentList.DoubleTapped += async (_, _) => await OpenEditDialog();
+
+        KeyDown += (_, e) =>
+        {
+            if (e.Key == Avalonia.Input.Key.Escape)
+                Close();
+        };
     }
 
     private async System.Threading.Tasks.Task OpenEditDialog()

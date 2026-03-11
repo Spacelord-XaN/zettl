@@ -23,5 +23,13 @@ public partial class FragmentEditDialog : Window
         base.OnLoaded(e);
         OkButton.Click += (_, _) => { Confirmed = true; Close(); };
         CancelButton.Click += (_, _) => { Confirmed = false; Close(); };
+        KeyDown += (_, ke) =>
+        {
+            if (ke.Key == Avalonia.Input.Key.Escape)
+            {
+                Confirmed = false;
+                Close();
+            }
+        };
     }
 }
