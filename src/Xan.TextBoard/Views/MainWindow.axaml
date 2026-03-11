@@ -1,20 +1,80 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Xan.TextBoard.ViewModels"
+        xmlns:models="using:Xan.TextBoard.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="480"
         x:Class="Xan.TextBoard.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Xan.TextBoard">
+        Title="TextBoard"
+        Width="720" Height="480"
+        MinWidth="480" MinHeight="300">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid RowDefinitions="Auto,*">
 
+        <!-- Toolbar -->
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    Spacing="6"
+                    Margin="8,8,8,4">
+            <Button Content="➕ Add"
+                    Command="{Binding AddCommand}"/>
+            <Button Content="✏️ Edit"
+                    Command="{Binding EditCommand}"
+                    Name="EditButton"/>
+            <Button Content="🗑 Delete"
+                    Command="{Binding DeleteCommand}"/>
+            <Separator Width="1" Background="Gray" Margin="4,0"/>
+            <Button Content="💾 Save"
+                    Command="{Binding SaveCommand}"
+                    Classes.accent="{Binding IsDirty}"/>
+            <TextBlock Text="● Unsaved changes"
+                       IsVisible="{Binding IsDirty}"
+                       VerticalAlignment="Center"
+                       Foreground="OrangeRed"
+                       Margin="6,0,0,0"/>
+        </StackPanel>
+
+        <!-- Two-panel layout -->
+        <Grid Grid.Row="1" ColumnDefinitions="240,*" Margin="8,0,8,8">
+
+            <!-- Fragment list -->
+            <Border Grid.Column="0"
+                    BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Margin="0,0,4,0">
+                <ListBox ItemsSource="{Binding Fragments}"
+                         SelectedItem="{Binding SelectedFragment}"
+                         Name="FragmentList">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:TextFragment">
+                            <TextBlock Text="{Binding Name}" Padding="4,2"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+
+            <!-- Preview panel -->
+            <Border Grid.Column="1"
+                    BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Margin="4,0,0,0">
+                <ScrollViewer>
+                    <TextBlock Text="{Binding SelectedFragment.Text}"
+                               TextWrapping="Wrap"
+                               Margin="8"
+                               IsVisible="{Binding SelectedFragment, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+                </ScrollViewer>
+            </Border>
+
+        </Grid>
+    </Grid>
 </Window>

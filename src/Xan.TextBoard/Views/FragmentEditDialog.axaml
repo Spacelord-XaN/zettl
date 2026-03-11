@@ -1,0 +1,46 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Xan.TextBoard.ViewModels"
+        x:Class="Xan.TextBoard.Views.FragmentEditDialog"
+        x:DataType="vm:FragmentEditViewModel"
+        Title="Edit Fragment"
+        Width="480" Height="320"
+        MinWidth="320" MinHeight="220"
+        WindowStartupLocation="CenterOwner"
+        CanResize="True">
+
+    <Grid RowDefinitions="Auto,*,Auto" Margin="16">
+
+        <!-- Name field -->
+        <StackPanel Grid.Row="0" Spacing="4" Margin="0,0,0,12">
+            <TextBlock Text="Name" FontWeight="SemiBold"/>
+            <TextBox Text="{Binding Name}" Watermark="Fragment name…"/>
+        </StackPanel>
+
+        <!-- Text field -->
+        <StackPanel Grid.Row="1" Spacing="4">
+            <TextBlock Text="Text" FontWeight="SemiBold"/>
+            <TextBox Text="{Binding Text}"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Stretch"
+                     Height="160"
+                     Watermark="Fragment text…"/>
+        </StackPanel>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Spacing="8"
+                    Margin="0,12,0,0">
+            <Button Content="Cancel" Name="CancelButton"/>
+            <Button Content="OK"
+                    Name="OkButton"
+                    IsDefault="True"
+                    IsEnabled="{Binding IsValid}"
+                    Classes="accent"/>
+        </StackPanel>
+
+    </Grid>
+</Window>
