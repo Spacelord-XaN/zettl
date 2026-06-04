@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Xan.Zettl.Helpers;
 using Xan.Zettl.Models;
 using Xan.Zettl.ViewModels;
 
@@ -19,6 +20,12 @@ public partial class PastePickerWindow : Window
     public PastePickerWindow(PastePickerViewModel vm) : this()
     {
         DataContext = vm;
+    }
+
+    protected override void OnOpened(EventArgs e)
+    {
+        base.OnOpened(e);
+        WindowFocusHelper.BringToForeground(this);
     }
 
     protected override void OnLoaded(RoutedEventArgs e)

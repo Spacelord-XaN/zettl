@@ -1,5 +1,7 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Xan.Zettl.Helpers;
 using Xan.Zettl.ViewModels;
 
 namespace Xan.Zettl.Views;
@@ -9,6 +11,12 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+    }
+
+    protected override void OnOpened(EventArgs e)
+    {
+        base.OnOpened(e);
+        WindowFocusHelper.BringToForeground(this);
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
